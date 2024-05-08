@@ -4,16 +4,15 @@ import morgan from "morgan";
 import * as controllers from "./controllers/index.js";
 import errorHandler from "./errors/error-handler.js";
 import path from "path";
-import sequelize from "./utils/mysql.js";
 
 const logger = morgan(process.env.LOG_FORMAT || "dev");
-const cors = cors({
+const corOption = cors({
   origin: process.env.CORS_ORIGIN || "*",
   methods: "GET,POST,PUT,DELETE",
   allowedHeaders: "Content-Type,Authorization",
 });
 
-const helmet = helmet({
+const helmetOption = helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'", 'cdn.example.com'],
@@ -67,14 +66,7 @@ export default async function initRoutes(app) {
   //   ]
   //   : [];/
 
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
-
-  app.use([logger, cors, helmet]);
+  app.use([logger, corOption, helmetOption]);
 
   app.use("/", authenticationRouter);
 
