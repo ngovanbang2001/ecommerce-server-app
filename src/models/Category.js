@@ -1,5 +1,7 @@
-import { Model } from 'sequelize'
-const Schema = (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize')
+
+module.exports = (sequelize, DataTypes) => {
   class Category extends Model {
   }
 
@@ -21,4 +23,3 @@ const Schema = (sequelize, DataTypes) => {
   return Category
 }
 
-export default Schema

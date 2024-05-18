@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 
-import CustomError from './custom-error'
+import CustomError from './custom-error.js'
 
 function errorHandler(err, req, res, next) {
   let message = 'An unhandled error has occurred from our server.'

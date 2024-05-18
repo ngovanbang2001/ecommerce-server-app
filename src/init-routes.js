@@ -1,9 +1,10 @@
 import cors from "cors";
 import statusCodes, { StatusCodes } from "http-status-codes";
 import morgan from "morgan";
-import * as controllers from "./controllers/index.js";
+import helmet from "helmet";
 import errorHandler from "./errors/error-handler.js";
 import path from "path";
+import authenticationRouter from "./routes/authentication-router.js";
 
 const logger = morgan(process.env.LOG_FORMAT || "dev");
 const corOption = cors({
@@ -68,7 +69,7 @@ export default async function initRoutes(app) {
 
   app.use([logger, corOption, helmetOption]);
 
-  app.use("/", authenticationRouter);
+  app.use("/api", authenticationRouter);
 
   // handle error
   app.use(errorHandler);

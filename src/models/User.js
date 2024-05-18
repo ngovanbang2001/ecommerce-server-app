@@ -1,5 +1,8 @@
-import { Model } from 'sequelize'
-const Schema = (sequelize, DataTypes) => {
+'use strict';
+
+const { Model } = require('sequelize')
+
+module.exports = (sequelize, DataTypes) => {
   class User extends Model {
   }
 
@@ -9,7 +12,7 @@ const Schema = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         primaryKey: true
       },
-      userName: DataTypes.STRING,
+      name: DataTypes.STRING,
       phoneNumber: DataTypes.STRING,
       email: DataTypes.STRING,
       avatar: DataTypes.STRING,
@@ -17,7 +20,8 @@ const Schema = (sequelize, DataTypes) => {
       password: DataTypes.STRING,
       role: {
         type: DataTypes.ENUM,
-        values: ['user', 'admin']
+        values: ['USER', 'ADMIN'],
+        defaultValue: 'USER'
       },
       address: DataTypes.STRING
     },
@@ -28,5 +32,3 @@ const Schema = (sequelize, DataTypes) => {
   )
   return User
 }
-
-export default Schema

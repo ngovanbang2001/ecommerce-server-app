@@ -1,5 +1,7 @@
-import { Model } from 'sequelize'
-const Schema = (sequelize, DataTypes) => {
+'use strict';
+const { Model } = require('sequelize')
+
+module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     static associate(models) {
       Order.hasOne(models.User, { foreignKey: 'id', as: 'user' })
@@ -25,8 +27,6 @@ const Schema = (sequelize, DataTypes) => {
           'returned'
         ]
       },
-      user: DataTypes.INTEGER,
-      product: DataTypes.INTEGER,
       amount: DataTypes.DOUBLE,
       note: DataTypes.TEXT
     },
@@ -37,5 +37,3 @@ const Schema = (sequelize, DataTypes) => {
   )
   return Order
 }
-
-export default Schema

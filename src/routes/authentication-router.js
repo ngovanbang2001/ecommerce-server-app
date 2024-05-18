@@ -1,10 +1,10 @@
 import express from 'express'
-import * as controllers from '../controllers/index.js'
+import authenticationController from '../controllers/authentication-controller'
 
 const authenticationRouter = express.Router()
 
-authenticationRouter.post('/sign-up', express.json(), controllers.authenticationControllers.signUp)
-authenticationRouter.post('/sign-in', express.json(), controllers.authenticationControllers.signIn)
-authenticationRouter.post('/refresh-token', controllers.authenticationControllers.refreshTokenService)
+authenticationRouter.post('/sign-up', express.json(), authenticationController.signUp)
+authenticationRouter.post('/sign-in', express.json(), authenticationController.signIn)
+authenticationRouter.post('/refresh-token', authenticationController.refreshTokenService)
 
 export default authenticationRouter

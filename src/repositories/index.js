@@ -1,0 +1,1 @@
+export { default as authenticationRepository } from './authentication-repository.js'

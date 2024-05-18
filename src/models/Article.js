@@ -1,6 +1,7 @@
-import { Model } from 'sequelize'
+'use strict';
+const { Model } = require('sequelize')
 
-const Schema = (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   class Article extends Model {
     static associate(models) {
       Article.hasMany(models.Product, { foreignKey: 'id', as: 'product' })
@@ -17,7 +18,6 @@ const Schema = (sequelize, DataTypes) => {
       content: DataTypes.TEXT,
       link: DataTypes.STRING,
       image: DataTypes.STRING,
-      product: DataTypes.INTEGER,
       isDeleted: DataTypes.BOOLEAN
     },
     {
@@ -27,5 +27,3 @@ const Schema = (sequelize, DataTypes) => {
   )
   return Article
 }
-
-export default Schema
