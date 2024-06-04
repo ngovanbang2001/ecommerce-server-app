@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isDelete: {
+      isDeleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },

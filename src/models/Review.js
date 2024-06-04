@@ -2,15 +2,16 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class Article extends Model {
+  class Review extends Model {
     static associate(models) {
-      Article.hasMany(models.Product, { foreignKey: 'id', as: 'product' })
+      Review.hasMany(models.Product, { foreignKey: 'id', as: 'product' })
     }
   }
 
-  Article.init(
+  Review.init(
     {
       id: {
+        
         type: DataTypes.UUID,
         primaryKey: true
       },
@@ -18,13 +19,13 @@ module.exports = (sequelize, DataTypes) => {
       content: DataTypes.TEXT,
       link: DataTypes.STRING,
       image: DataTypes.STRING,
+      isDeleted: DataTypes.BOOLEAN,
       productId: DataTypes.INTEGER,
-      isDeleted: DataTypes.BOOLEAN
     },
     {
       sequelize,
-      modelName: 'Article'
+      modelName: 'Review'
     }
   )
-  return Article
+  return Review
 }

@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
       Product.hasMany(models.Category, { foreignKey: 'id', as: 'category' })
+      Product.hasMany(models.ProductImage, { foreignKey: 'id', as: 'images' })
     }
   }
 
@@ -16,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       description: DataTypes.STRING,
-      color: DataTypes.STRING,
-      size: DataTypes.STRING,
+      SKU: DataTypes.STRING,
+      price: DataTypes.DOUBLE,
+      categoryId: DataTypes.INTEGER,
       isDeleted: DataTypes.BOOLEAN,
-      quantity: DataTypes.INTEGER,
     },
     {
       sequelize,

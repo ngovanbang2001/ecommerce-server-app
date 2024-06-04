@@ -3,37 +3,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Product', {
+    await queryInterface.createTable('Review', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
+      productId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      description: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      SKU: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      quantity: {
+      }, 
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      categoryId: {
-        type: Sequelize.INTEGER,
+      title: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      price : {
-        type: Sequelize.DOUBLE,
+      comment : {
+        type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 0
+      },
+      rate : {
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -49,6 +44,6 @@ module.exports = {
       }
     });
   }, async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Product');
+    await queryInterface.dropTable('Review');
   }
 };
