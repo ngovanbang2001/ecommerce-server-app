@@ -22,13 +22,17 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      comment : {
+      image : {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
+      },
+      content : {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
       rate : {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,

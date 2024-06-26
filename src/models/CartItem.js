@@ -2,30 +2,26 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class Review extends Model {
+  class CartItem extends Model {
     static associate(models) {
     }
   }
 
-  Review.init(
+  CartItem.init(
     {
       id: {
-        
         type: DataTypes.UUID,
         primaryKey: true
       },
-      title: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      link: DataTypes.STRING,
-      image: DataTypes.STRING,
+      cartId: DataTypes.INTEGER,
+      quantity: DataTypes.INTEGER,
+      sku: DataTypes.INTEGER,
       isDeleted: DataTypes.BOOLEAN,
-      productId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: 'Review'
+      modelName: 'CartItem'
     }
   )
-  return Review
+  return CartItem
 }

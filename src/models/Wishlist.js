@@ -2,14 +2,12 @@
 const { Model } = require('sequelize')
 
 module.exports= (sequelize, DataTypes) => {
-  class Favorite extends Model {
+  class Wishlist extends Model {
     static associate(models) {
-      Favorite.hasOne(models.User, { foreignKey: 'id', as: 'user' })
-      Favorite.hasMany(models.Product, { foreignKey: 'id', as: 'product' })
     }
   }
 
-  Favorite.init(
+  Wishlist.init(
     {
       id: {
         type: DataTypes.UUID,
@@ -17,11 +15,12 @@ module.exports= (sequelize, DataTypes) => {
       },
       userId: DataTypes.INTEGER,
       productId: DataTypes.INTEGER,
+      isDeleted: DataTypes.BOOLEAN
     },
     {
       sequelize,
-      modelName: 'Favorite'
+      modelName: 'Wishlist'
     }
   )
-  return Favorite
+  return Wishlist
 }

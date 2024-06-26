@@ -3,20 +3,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Favorite', {
+    await queryInterface.createTable('ProductSKU', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       productId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+      },
+      colorAttributeId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      sizeAttributeId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      description: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      price: {
+        type: Sequelize.DOUBLE,
+        defaultValue: 0
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
@@ -32,6 +48,6 @@ module.exports = {
       }
     });
   }, async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Favorite');
+    await queryInterface.dropTable('Product');
   }
 };

@@ -13,10 +13,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       status: {
         type: Sequelize.ENUM,
         values:  [
@@ -30,7 +26,7 @@ module.exports = {
         ],
         defaultValue: "CREATED"
       },
-      amount: {
+      totalPrice: {
         type: Sequelize.DOUBLE,
         allowNull: false,
       },

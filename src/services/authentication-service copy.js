@@ -12,22 +12,36 @@ export default {
       });
     });
   },
+
   async signIn({ password, email }) {
     if (!password || !email) throw new UnauthorizedError("Please enter your password and email");
     const user = await authenticationRepository.findUser({ email});
     if (!user) throw new UnauthorizedError("User not found");
+
     const checkPassword = bcrypt.compareSync(password, user.password)
-      if (!checkPassword) throw new UnauthorizedError("Password is not invalid");
-      const accessToken = this.generalAccessToken({ email, password });
-      const refreshToken = this.generalRefreshToken({ email, password });
-      return { accessToken, refreshToken }
+    if (!checkPassword) throw new UnauthorizedError("Password is not invalid");
+
+    const accessToken = this.generateAccessToken({ email, password });
+    const refreshToken = this.generateRefreshToken({ email, password });
+    
+    return { accessToken, refreshToken }
   },
-  generalAccessToken(data) {
+
+  generateAccessToken(data) {
     const access_token = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h' })
     return access_token
   },
-  generalRefreshToken(data) {
+  generateRefreshToken(data) {
     const access_token = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '365d' })
     return access_token
-  }
+  },
+  generateAccessTokenFromRefreshToken(refreshToken) {
+    try {
+      const decode = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
+      const access_token = generateAccessToken(decode)
+      return access_token
+    } catch (error) {
+      throw new RefreshTokenExpiredError(err);
+    }
+  },
 }

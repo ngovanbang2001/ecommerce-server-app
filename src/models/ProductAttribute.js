@@ -2,30 +2,26 @@
 const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
-  class Review extends Model {
+  class ProductAttribute extends Model {
     static associate(models) {
+      ProductAttribute.hasMany(models.ProductSKU, { foreignKey: 'sku', as: 'ProductOrderItem' })
     }
   }
 
-  Review.init(
+  ProductAttribute.init(
     {
       id: {
-        
         type: DataTypes.UUID,
         primaryKey: true
       },
-      title: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      link: DataTypes.STRING,
-      image: DataTypes.STRING,
+      type: DataTypes.STRING,
+      value: DataTypes.STRING,
       isDeleted: DataTypes.BOOLEAN,
-      productId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
     },
     {
       sequelize,
-      modelName: 'Review'
+      modelName: 'ProductAttribute'
     }
   )
-  return Review
+  return ProductAttribute
 }

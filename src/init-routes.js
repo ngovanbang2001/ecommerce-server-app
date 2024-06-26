@@ -5,6 +5,7 @@ import helmet from "helmet";
 import errorHandler from "./errors/error-handler.js";
 import path from "path";
 import authenticationRouter from "./routes/authentication-router.js";
+import userRouter from "./routes/user-router.js";
 
 const logger = morgan(process.env.LOG_FORMAT || "dev");
 const corOption = cors({
@@ -70,6 +71,7 @@ export default async function initRoutes(app) {
   app.use([logger, corOption, helmetOption]);
 
   app.use("/api", authenticationRouter);
+  app.use("/api/user", userRouter);
 
   // handle error
   app.use(errorHandler);

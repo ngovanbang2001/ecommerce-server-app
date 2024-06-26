@@ -4,8 +4,11 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
-      Product.hasMany(models.Category, { foreignKey: 'id', as: 'category' })
-      Product.hasMany(models.ProductImage, { foreignKey: 'id', as: 'images' })
+      Product.hasMany(models.Article, { foreignKey: 'productId', as: 'productArticle'})
+      Product.hasMany(models.Review, { foreignKey: 'productId', as: 'productReview'})
+      Product.hasMany(models.ProductSKU, { foreignKey: 'productId', as: 'productSKU'})
+      Product.hasMany(models.ProductImage, { foreignKey: 'productId', as: 'productImage'})
+      Product.hasMany(models.Wishlist, { foreignKey: 'productId', as: 'productWishlist'})
     }
   }
 
@@ -17,8 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       description: DataTypes.STRING,
-      SKU: DataTypes.STRING,
-      price: DataTypes.DOUBLE,
       categoryId: DataTypes.INTEGER,
       isDeleted: DataTypes.BOOLEAN,
     },

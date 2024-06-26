@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Cart', {
+    await queryInterface.createTable('Wishlist', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,9 +14,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      totalPrice: {
-        type: Sequelize.DOUBLE,
+      productId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +32,6 @@ module.exports = {
       }
     });
   }, async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Cart');
+    await queryInterface.dropTable('Wishlist');
   }
 };

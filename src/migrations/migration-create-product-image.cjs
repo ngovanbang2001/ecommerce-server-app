@@ -18,7 +18,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-
       isDeleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: false

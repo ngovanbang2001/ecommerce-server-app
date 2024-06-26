@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      productId: {
+      sku: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -21,9 +21,9 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      price: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,

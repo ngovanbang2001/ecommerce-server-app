@@ -4,8 +4,7 @@ const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Cart extends Model {
     static associate(models) {
-      Cart.hasOne(models.User, { foreignKey: 'id', as: 'user' })
-      Cart.hasMany(models.Product, { foreignKey: 'id', as: 'product' })
+      Cart.hasMany(models.CartItem, { foreignKey: 'id', as: 'cart' })
     }
   }
 
@@ -15,9 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.UUID,
         primaryKey: true
       },
-      quantity: DataTypes.INTEGER,
+      totalPrice: DataTypes.DOUBLE,
       userId: DataTypes.INTEGER,
-      productId: DataTypes.INTEGER,
     },
     {
       sequelize,

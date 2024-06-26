@@ -3,20 +3,28 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Cart', {
+    await queryInterface.createTable('CartItem', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      cartId: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      totalPrice: {
-        type: Sequelize.DOUBLE,
+      sku: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+      },
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
@@ -28,6 +36,6 @@ module.exports = {
       }
     });
   }, async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Cart');
+    await queryInterface.dropTable('CartItem');
   }
 };

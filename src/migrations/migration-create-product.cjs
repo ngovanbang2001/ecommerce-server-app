@@ -18,22 +18,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      SKU: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      quantity: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       categoryId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      price : {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
-        defaultValue: 0
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,

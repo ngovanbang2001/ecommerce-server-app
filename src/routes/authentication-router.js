@@ -5,6 +5,6 @@ const authenticationRouter = express.Router()
 
 authenticationRouter.post('/sign-up', express.json(), authenticationController.signUp)
 authenticationRouter.post('/sign-in', express.json(), authenticationController.signIn)
-authenticationRouter.post('/refresh-token', authenticationController.refreshTokenService)
+authenticationRouter.post('/refresh-token',  authenticationController.refreshToken)
 
 export default authenticationRouter
