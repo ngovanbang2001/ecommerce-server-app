@@ -6,12 +6,14 @@ import errorHandler from "./errors/error-handler.js";
 import path from "path";
 import authenticationRouter from "./routes/authentication-router.js";
 import userRouter from "./routes/user-router.js";
+import productRouter from "./routes/product-router.js";
 
 const logger = morgan(process.env.LOG_FORMAT || "dev");
 const corOption = cors({
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: process.env.CORS_ORIGIN || true,
   methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization",
+  credentials: true,
+  allowedHeaders: "Origin, X-Requested-With, Content-Type, Accept, Authorization",
 });
 
 const helmetOption = helmet({
@@ -72,6 +74,8 @@ export default async function initRoutes(app) {
 
   app.use("/api", authenticationRouter);
   app.use("/api/user", userRouter);
+  app.use("/api/product", productRouter);
+  app.use("/api/upload", uploadRouter);
 
   // handle error
   app.use(errorHandler);

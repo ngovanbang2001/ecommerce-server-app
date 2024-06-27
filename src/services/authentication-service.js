@@ -5,17 +5,16 @@ import bcrypt from "bcryptjs";
 
 export default {
   async createUser({ email, password, name, phoneNumber }) {
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(password, salt, async function (err, hash) {
-        if (err) throw new UnauthorizedError(err);
-        await authenticationRepository.createUser({ email, password: hash, name, phoneNumber })
-      });
-    });
+    const genPwd = await bcrypt.genSalt(10)
+    if(!genPwd) throw new InternalServerError("Error")
+    const hasPwd = await bcrypt.hash(password, genPwd)
+    if (!hasPwd) throw new InternalServerError("Error")
+    await authenticationRepository.createUser({ email, password: hasPwd, name, phoneNumber })
   },
 
   async signIn({ password, email }) {
     if (!password || !email) throw new UnauthorizedError("Please enter your password and email");
-    const user = await authenticationRepository.findUser({ email});
+    const user = await authenticationRepository.findUser({ email });
     if (!user) throw new UnauthorizedError("User not found");
 
     const checkPassword = bcrypt.compareSync(password, user.password)
@@ -23,23 +22,21 @@ export default {
 
     const accessToken = this.generateAccessToken({ email, password });
     const refreshToken = this.generateRefreshToken({ email, password });
-    
+
     return { accessToken, refreshToken }
   },
 
   generateAccessToken(data) {
-    const access_token = jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h' })
-    return access_token
+    return jwt.sign(data, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h' })
   },
   generateRefreshToken(data) {
-    const access_token = jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '365d' })
-    return access_token
+    return jwt.sign(data, process.env.REFRESH_TOKEN_SECRET, { expiresIn: '365d' })
+
   },
   generateAccessTokenFromRefreshToken(refreshToken) {
     try {
       const decode = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
-      const access_token = generateAccessToken(decode)
-      return access_token
+      return generateAccessToken(decode)
     } catch (error) {
       throw new RefreshTokenExpiredError(err);
     }

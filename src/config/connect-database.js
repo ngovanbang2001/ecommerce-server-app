@@ -16,7 +16,7 @@ const connectDatabase = () => {
             query: {
             raw: true,
             },
-            timezone: '+07:00',
+            timezone: '+00:00',
         });
         sequelize.authenticate();
         console.log('Connection has been established successfully.');
