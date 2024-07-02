@@ -7,6 +7,7 @@ import path from "path";
 import authenticationRouter from "./routes/authentication-router.js";
 import userRouter from "./routes/user-router.js";
 import productRouter from "./routes/product-router.js";
+import uploadRouter from "./routes/upload-router.js";
 
 const logger = morgan(process.env.LOG_FORMAT || "dev");
 const corOption = cors({

@@ -3,9 +3,9 @@ import { authMiddleware } from '../middlewares'
 
 const productRouter = express.Router()
 
-productRouter.get('/list', express.json(), authMiddleware, userController.info)
-productRouter.post('/create', express.json(), authMiddleware, userController.info)
-productRouter.put('/:id', express.json(), authMiddleware, userController.info)
-productRouter.delete('/:id', express.json(), authMiddleware, userController.info)
+productRouter.get('/list', express.json(), authMiddleware)
+productRouter.post('/create', express.json(), authMiddleware)
+productRouter.put('/:id', express.json(), authMiddleware)
+productRouter.delete('/:id', express.json(), authMiddleware)
 
 export default productRouter
