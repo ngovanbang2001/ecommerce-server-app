@@ -21,11 +21,13 @@ export default {
         res.cookie(REFRESH_TOKEN, refreshToken, optionCookie)
         res.send()
     },
-    async logOut(req, res) {
+    
+    async signOut(req, res) {
         res.clearCookie(ACCESS_TOKEN)
         res.clearCookie(REFRESH_TOKEN)
         res.send()
     },
+
     async refreshToken(req, res) {
         const refreshToken = req.cookies[REFRESH_TOKEN]
         if (!refreshToken) throw new RefreshTokenExpiredError("Refresh token failed")
