@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 export default function authMiddleware(req, res, next) {
   const token= req.cookies[ACCESS_TOKEN]
   if (!token){
-    return next();
+    throw new UnauthorizedError("Need sign in to access")
   }
 
   try {

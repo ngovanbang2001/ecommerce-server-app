@@ -1,4 +1,5 @@
 import db, { sequelize } from '../models'
+import { Op } from '@sequelize/core';
 
 export default {
   async createUser({ email, name, password, phoneNumber }) {
@@ -16,7 +17,15 @@ export default {
   },
 
   async findUser({ email }) {
-    return await db.User.findOne({ where: { email } })
+    return await db.User.findOne({
+      attributes: { exclude: ['password'] },
+      where: {
+        [Op.and]: {
+          email,
+          isDelete: false
+        }
+      }
+    })
   },
   refreshTokenService(token) {
   }
