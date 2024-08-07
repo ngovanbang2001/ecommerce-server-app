@@ -7,6 +7,7 @@ export default {
         await authenticationService.createUser({ email, name, password, phoneNumber });
         return res.status(200).json("ok")
     },
+    
     async signIn(req, res) {
         const { email, password } = req.body
         const { accessToken, refreshToken } = await authenticationService.signIn({ email, password })

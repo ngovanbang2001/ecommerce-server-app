@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  mysql:
+    platform: linux/x86_64
+    image: mysql:5.7
+    container_name: mysql-nodejs
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'ngovanbang'
+      MYSQL_DATABASE: e-commerce
+    ports:
+      - 13306
+    volumes:
+      - db:/var/lib/mysql
+    networks:
+      - nodejss
+
+  web:
+    depends_on:
+      - mysql
+    build: ./myapp
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./myapp/:/app
+    restart: unless-stopped
+    container_name: nodejs
+    stdin_open: true
+    tty: true
+    networks:
+      - nodejss
+
+volumes:
+  db:
+
+networks:
+  nodejss:

@@ -7,9 +7,9 @@ export default {
       where: { email } })
   },
 
-  async update({ email, name, address, phoneNumber }) {
+  async update({ email, name, address, phoneNumber, avatar }) {
     return await db.User.update({
-      name, address, phoneNumber
-    },{ where: { email } })
+      name, address, phoneNumber, avatar
+    }, { where: { email } })
   },
 }

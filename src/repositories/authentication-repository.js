@@ -18,11 +18,10 @@ export default {
 
   async findUser({ email }) {
     return await db.User.findOne({
-      attributes: { exclude: ['password'] },
       where: {
         [Op.and]: {
           email,
-          isDelete: false
+          isDeleted: false
         }
       }
     })
