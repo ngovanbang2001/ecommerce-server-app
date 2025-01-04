@@ -77,6 +77,7 @@ export default async function initRoutes(app) {
   app.use("/api/user", userRouter);
   app.use("/api/product", productRouter);
   app.use("/api/upload", uploadRouter);
+  app.use("*", (req, res) =>  res.status(200).json('ok'));
 
   // handle error
   app.use(errorHandler);

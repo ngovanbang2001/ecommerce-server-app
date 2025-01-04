@@ -1,8 +1,9 @@
 'use strict';
-const { Model } = require('sequelize')
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
 
-module.exports= (sequelize, DataTypes) => {
-  class Wishlist extends Model {
+module.exports= (sequelize) => {
+  class Wishlist extends BaseModel {
     static associate(models) {
     }
   }
@@ -11,11 +12,17 @@ module.exports= (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      userId: DataTypes.INTEGER,
-      productId: DataTypes.INTEGER,
-      isDeleted: DataTypes.BOOLEAN
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,

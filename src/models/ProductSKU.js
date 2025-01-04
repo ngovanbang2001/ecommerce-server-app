@@ -1,11 +1,13 @@
 'use strict';
-const { Model } = require('sequelize')
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
 
-module.exports = (sequelize, DataTypes) => {
-  class ProductSKU extends Model {
+module.exports = (sequelize) => {
+  class ProductSKU extends BaseModel {
     static associate(models) {
-      ProductSKU.hasMany(models.CartItem, { foreignKey: 'sku', as: 'productCartItem' })
-      ProductSKU.hasMany(models.OrderItem, { foreignKey: 'sku', as: 'ProductOrderItem' })
+      ProductSKU.hasMany(models.CartItem, { foreignKey: 'sku', as: 'cartItem' })
+      ProductSKU.hasMany(models.OrderItem, { foreignKey: 'sku', as: 'orderItem' })
+      ProductSKU.hasMany(models.Review, { foreignKey: 'sku', as: 'review'})
     }
   }
 
@@ -13,15 +15,29 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      name: DataTypes.STRING,
-      productId: DataTypes.INTEGER,
-      price: DataTypes.DOUBLE,
-      quantity: DataTypes.INTEGER,
-      colorAttributeId: DataTypes.INTEGER,
-      sizeAttributeId: DataTypes.INTEGER,
-      isDeleted: DataTypes.BOOLEAN,
+      productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      color: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      size: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
     {
       sequelize,

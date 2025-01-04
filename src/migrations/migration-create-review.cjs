@@ -6,23 +6,27 @@ module.exports = {
     await queryInterface.createTable('Review', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        defaultValue: Sequelize.UUIDV4,
       },
-      productId: {
-        type: Sequelize.INTEGER,
+      sku: {
+        type: Sequelize.UUID,
         allowNull: false,
       }, 
       userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
       },
       title: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      image : {
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      link: {
         type: Sequelize.STRING,
         allowNull: true,
       },
@@ -30,22 +34,32 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      rate : {
+      rate: {
         type: Sequelize.INTEGER,
         allowNull: true,
+      },
+      isVerified: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
       },
       isDeleted: {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.NOW,
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
     });
   }, async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Review');

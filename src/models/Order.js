@@ -1,10 +1,11 @@
 'use strict';
-const { Model } = require('sequelize')
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
 
-module.exports = (sequelize, DataTypes) => {
-  class Order extends Model {
+module.exports = (sequelize) => {
+  class Order extends BaseModel {
     static associate(models) {
-      Order.hasOne(models.OrderItem, { foreignKey: 'id', as: 'order' })
+      Order.hasMany(models.OrderItem, { foreignKey: 'id', as: 'order' })
     }
   }
 
@@ -12,23 +13,34 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      userId: DataTypes.INTEGER,
-      status: {
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      paymentStatus: {
         type: DataTypes.ENUM,
         values: [
-          'created',
-          'processing',
-          'shipped',
-          'delivered',
-          'completed',
-          'cancelled',
-          'returned'
-        ]
+          "PENDING",
+          "FAILED",
+          "INPROGRESS",
+          "COMPLETED",
+          "REFUND",
+          "CANCELLED",
+          "DISPUTED"
+        ],
+        defaultValue: 'INPROGRESS'
       },
-      totalPrice: DataTypes.DOUBLE,
-      note: DataTypes.TEXT
+      shippingAddress: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      note: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      }
     },
     {
       sequelize,

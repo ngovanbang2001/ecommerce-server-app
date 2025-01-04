@@ -6,24 +6,20 @@ module.exports = {
     await queryInterface.createTable('ProductSKU', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        defaultValue: Sequelize.UUIDV4,
       },
       productId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
+          type: Sequelize.UUID,
+          allowNull: false,
       },
-      colorAttributeId: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-      },
-      sizeAttributeId: {
+      color: {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      description: {
-        type: Sequelize.STRING,
+      size: {
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       quantity: {
@@ -39,15 +35,21 @@ module.exports = {
         defaultValue: false
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.NOW,
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
     });
   }, async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Product');
+    await queryInterface.dropTable('ProductSKU');
   }
 };

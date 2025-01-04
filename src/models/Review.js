@@ -1,8 +1,9 @@
 'use strict';
-const { Model } = require('sequelize')
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
 
-module.exports = (sequelize, DataTypes) => {
-  class Review extends Model {
+module.exports = (sequelize) => {
+  class Review extends BaseModel {
     static associate(models) {
     }
   }
@@ -10,17 +11,42 @@ module.exports = (sequelize, DataTypes) => {
   Review.init(
     {
       id: {
-        
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      title: DataTypes.STRING,
-      content: DataTypes.TEXT,
-      link: DataTypes.STRING,
-      image: DataTypes.STRING,
-      isDeleted: DataTypes.BOOLEAN,
-      productId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      link: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+      },
+      sku: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      rate: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,

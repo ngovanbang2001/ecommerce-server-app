@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node src/index.js",
     "create-db": "npx sequelize-cli db:migrate",
-    "undo-db": "npx sequelize-cli db:migrate:undo"
+    "undo-db": "npx sequelize-cli db:migrate:undo",
+    "drop-db": "npx sequelize-cli db:drop"
   },
   "author": "",
   "license": "ISC",

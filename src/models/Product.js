@@ -1,14 +1,13 @@
 'use strict';
-const { Model } = require('sequelize')
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
 
-module.exports = (sequelize, DataTypes) => {
-  class Product extends Model {
+module.exports = (sequelize) => {
+  class Product extends BaseModel {
     static associate(models) {
-      Product.hasMany(models.Article, { foreignKey: 'productId', as: 'productArticle'})
-      Product.hasMany(models.Review, { foreignKey: 'productId', as: 'productReview'})
+      Product.hasMany(models.Article, { foreignKey: 'productId', as: 'article'})
       Product.hasMany(models.ProductSKU, { foreignKey: 'productId', as: 'productSKU'})
-      Product.hasMany(models.ProductImage, { foreignKey: 'productId', as: 'productImage'})
-      Product.hasMany(models.Wishlist, { foreignKey: 'productId', as: 'productWishlist'})
+      Product.hasMany(models.Wishlist, { foreignKey: 'productId', as: 'wishlist'})
     }
   }
 
@@ -16,12 +15,33 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      name: DataTypes.STRING,
-      description: DataTypes.STRING,
-      categoryId: DataTypes.INTEGER,
-      isDeleted: DataTypes.BOOLEAN,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      categoryId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      discount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      price: {
+        type: DataTypes.DOUBLE,
+        allowNull: false,
+      },
     },
     {
       sequelize,

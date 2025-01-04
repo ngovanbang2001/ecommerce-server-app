@@ -6,9 +6,9 @@ module.exports = {
     await queryInterface.createTable('Product', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        defaultValue: Sequelize.UUIDV4,
       },
       name: {
         type: Sequelize.STRING,
@@ -18,8 +18,20 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      categoryId: {
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      discount: {
         type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      categoryId: {
+        type: Sequelize.UUID,
         allowNull: false,
       },
       isDeleted: {
@@ -27,13 +39,19 @@ module.exports = {
         defaultValue: false
       },
       createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.NOW,
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
     });
   }, async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Product');

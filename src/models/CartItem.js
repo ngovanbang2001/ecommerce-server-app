@@ -1,8 +1,10 @@
 'use strict';
-const { Model } = require('sequelize')
 
-module.exports = (sequelize, DataTypes) => {
-  class CartItem extends Model {
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
+
+module.exports = (sequelize) => {
+  class CartItem extends BaseModel {
     static associate(models) {
     }
   }
@@ -11,12 +13,21 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      cartId: DataTypes.INTEGER,
-      quantity: DataTypes.INTEGER,
-      sku: DataTypes.INTEGER,
-      isDeleted: DataTypes.BOOLEAN,
+      cartId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      sku: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      }
     },
     {
       sequelize,

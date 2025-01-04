@@ -5,15 +5,15 @@ module.exports = {
     await queryInterface.createTable('Order', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.UUID,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        defaultValue: Sequelize.UUIDV4,
       },
       userId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
       },
-      status: {
+      paymentStatus: {
         type: Sequelize.ENUM,
         values:  [
           "CREATED",
@@ -26,22 +26,45 @@ module.exports = {
         ],
         defaultValue: "CREATED"
       },
-      totalPrice: {
-        type: Sequelize.DOUBLE,
-        allowNull: false,
+      paymentStatus: {
+        type: Sequelize.ENUM,
+        values: [
+          "PENDING",
+          "FAILED",
+          "INPROGRESS",
+          "COMPLETED",
+          "REFUND",
+          "CANCELLED",
+          "DISPUTED"
+        ],
+        defaultValue: 'INPROGRESS'
       },
       note: {
         type: Sequelize.TEXT,
         allowNull: true,
       },
-      createdAt: {
+      shippingAddress: {
+        type: Sequelize.TEXT,
         allowNull: false,
-        type: Sequelize.DATE
+      },
+      isDeleted: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
       updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        defaultValue: Sequelize.NOW,
+      },
+      deletedAt: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
     });
   }, async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Order');

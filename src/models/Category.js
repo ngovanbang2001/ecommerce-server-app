@@ -1,10 +1,12 @@
 'use strict';
-const { Model } = require('sequelize')
 
-module.exports = (sequelize, DataTypes) => {
-  class Category extends Model {
+const { DataTypes } = require('sequelize');
+const BaseModel = require('./BaseModel');
+
+module.exports = (sequelize) => {
+  class Category extends BaseModel {
     static associate(models) {
-      Category.hasMany(models.Product, { foreignKey: 'id', as: 'category' })
+      Category.hasMany(models.Product, { foreignKey: 'categoryId', as: 'category' })
     }
 
   }
@@ -13,11 +15,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       id: {
         type: DataTypes.UUID,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV4,
       },
-      name: DataTypes.STRING,
-      image: DataTypes.STRING,
-      isDeleted: DataTypes.BOOLEAN,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     {
       sequelize,
