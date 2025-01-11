@@ -1,38 +1,39 @@
-version: "3.9"
+version: "3.8"
 
 services:
-  mysql:
-    platform: linux/x86_64
-    image: mysql:5.7
-    container_name: mysql-nodejs
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: 'ngovanbang'
-      MYSQL_DATABASE: e-commerce
-    ports:
-      - 13306
-    volumes:
-      - db:/var/lib/mysql
-    networks:
-      - nodejss
-
-  web:
-    depends_on:
-      - mysql
-    build: ./myapp
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nodejs-app
     ports:
       - "3000:3000"
+    environment:
+      - PORT=8080
+      - NODE_ENV=development
+      - ACCESS_TOKEN_SECRET="baNg"
+      - REFRESH_TOKEN_SECRET="bAng"
+      - CLOUDIARY_NAME='dpmnrmtdd'
+      - API_KEY_CLOUDIARY='948551935874948'
+      - API_SECRET_KEY_CLOUDIARY='WHoy1RaTiqTD-hRnr98Z1tSPOiE'
+    depends_on:
+      - mysql
     volumes:
-      - ./myapp/:/app
-    restart: unless-stopped
-    container_name: nodejs
-    stdin_open: true
-    tty: true
-    networks:
-      - nodejss
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ngovanbang
+      MYSQL_DATABASE: e-commerce
+      MYSQL_USER: root
+      MYSQL_PASSWORD: ngovanbang
+    volumes:
+      - mysql_data:/var/lib/mysql
 
 volumes:
-  db:
-
-networks:
-  nodejss:
+  mysql_data:
